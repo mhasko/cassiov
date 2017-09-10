@@ -28,7 +28,16 @@
 
     TeamDetailsCtrl.$inject = ['$filter', '$scope', 'services'];
     function TeamDetailsCtrl($filter, $scope, services){
+        var exportObject = services.getExportDataObject()
         $scope.updateExportObject = updateExportObject;
+
+        function createCSVDataRow(sum, team){
+            //Create the csvdata row for this user-game
+            var row = angular.copy(sum.stats);
+            row.championId = sum.championId;
+            row.summonerId = sum.summonerId;
+            return row;
+        }
 
 
         function getChampInfo(sum){
@@ -58,17 +67,16 @@
         }
 
         function updateExportObject(sum){
-            sum.csvid = $scope.gameid + "-" + sum.summonerId;
+            var csvid = $scope.gameid + "-" + sum.summonerId;
             if(sum.selectedData){
-                //Create the csvdata row for this user-game
-
                 //add this csvdata row to the export object
-                $scope.updateExportObject.push()
+                sum.csvid = csvid;
+                exportObject.push(createCSVDataRow(sum, $scope.team))
             } else {
                 //Find the csvdata row using the csvid and remove it.
                 //This is done by doing a filter for all objects in the array that do not
                 //  have the csvid and setting that as the new array
-
+                exportObject = $filter('filter')(exportObject, {csvid:csvid},true);
             }
         }
 
