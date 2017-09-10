@@ -4,7 +4,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.4.14/angular-sanitize.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.6/ng-csv.js"></script>
 
-    <script src="js/groupedGames.js"></script>
     <script src="js/csvCtrl.js"></script>
     <script src="js/services.js"></script>
     <script src="js/backingDataService.js"></script>
@@ -19,14 +18,12 @@
     <div>
         <label>Summoner Name</label><input type="text" ng-model="summonerName"><span>Server: NA TODO select</span>
         <button ng-click="getMatchesForSummoner(summonerName)">Get Matches</button>
-        <!--<button ng-click="saveAsCsv(matchRawData)">Export as CSV</button>-->
         <button ng-csv="exportData" filename="test.csv">Export as CSV</button>
     </div>
 
-    <div>
+    <div class="matchHistoryDiv">
         <span>Match History</span>
         <div class="matchData" ng-repeat="data in matchRawData">
-            <span>[] checkbox to export as csv</span>
             <game-details data="data"></game-details>
         </div>
 

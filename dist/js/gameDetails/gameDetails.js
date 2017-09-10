@@ -27,7 +27,6 @@
     GameDetailsCtrl.$inject = ['$filter', '$scope'];
     function GameDetailsCtrl($filter, $scope){
         $scope.gameDate = getDateFromMilli($scope.data.gameCreation);
-        $scope.isSearchedTeam = isSearchedTeam;
 
         function getDateFromMilli(milli) {
             var date = new Date(milli);

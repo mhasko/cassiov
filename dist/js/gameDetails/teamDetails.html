@@ -1,8 +1,11 @@
-    <div class="teamDetails" ng-class="{win:searchedTeam && team.win === 'Win',loss:searchedTeam && team.win === 'Fail'}">
+    <div class="teamDetails">
     <span>{{sideString}}</span>
 
     <div>
         <div class="summonerDetails" ng-repeat="sum in summoners">
+            <div class="champSelectBox">
+                <input type="checkbox" ng-model="sum.selectedData" ng-change="updateExportObject(sum)">
+            </div>
             <div class="champIcon">
                 <img ng-if="sum.champLink" src="{{sum.champLink}}">
             </div>

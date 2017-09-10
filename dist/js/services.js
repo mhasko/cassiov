@@ -11,10 +11,12 @@
 
     Services.$inject=['$http', 'backingData'];
     function Services($http, backingData){
+        var exportDataObject = [];
         var theService = {
             getChampDataForId:getChampDataForId,
+            getExportDataObject:getExportDataObject,
             getMatchDataFor:getMatchDataFor,
-            getSummonerDataFor:getSummonerDataFor,
+            getSummonerDataFor:getSummonerDataFor
         };
         return theService;
 
@@ -42,6 +44,10 @@
                 url: url,
                 params: {"matchType":matchTypeParams}
             });
+        }
+
+        function getExportDataObject(){
+            return exportDataObject;
         }
 
         function getMatchDataFor(matchId){

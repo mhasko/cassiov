@@ -13,6 +13,7 @@
         var directive = {
             restrict: 'E',
             scope:{
+                gameid: '=',
                 team:'=',
                 searchedTeam:'=',
                 side:'=',
@@ -27,6 +28,9 @@
 
     TeamDetailsCtrl.$inject = ['$filter', '$scope', 'services'];
     function TeamDetailsCtrl($filter, $scope, services){
+        $scope.updateExportObject = updateExportObject;
+
+
         function getChampInfo(sum){
             services.getChampDataForId(sum.championId).then(function(response){
                 sum['champLink'] = getIconLink(response.data.image.full)
@@ -51,6 +55,21 @@
                     $scope.summoners.push(part);
                 }
             })
+        }
+
+        function updateExportObject(sum){
+            sum.csvid = $scope.gameid + "-" + sum.summonerId;
+            if(sum.selectedData){
+                //Create the csvdata row for this user-game
+
+                //add this csvdata row to the export object
+                $scope.updateExportObject.push()
+            } else {
+                //Find the csvdata row using the csvid and remove it.
+                //This is done by doing a filter for all objects in the array that do not
+                //  have the csvid and setting that as the new array
+
+            }
         }
 
         init();

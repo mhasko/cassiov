@@ -8,15 +8,15 @@
         .module('csvModules',['gameObjects','services', "ngSanitize", "ngCsv"])
         .controller('csvCtrl', CsvCtrl)
 
-    CsvCtrl.$inject = ['$scope', '$log', '$http', '$q', 'services', 'backingData'];
-    function CsvCtrl($scope, $log, $http, $q, services, backingData){
-        $scope.matchType = backingData.matchType;
+    CsvCtrl.$inject = ['$scope', '$log', 'services'];
+    function CsvCtrl($scope, $log, services){
+        $scope.exportData = services.getExportDataObject();
 
         //This will be be the raw backing object for the app
         $scope.matchRawData = {};
 
         $scope.getMatchesForSummoner = getMatchesForSummoner;
-        $scope.saveAsCsv = saveAsCsv;
+        //$scope.saveAsCsv = saveAsCsv;
 
 
         function getMatchesForSummoner(sumName) {
@@ -32,26 +32,15 @@
             })
         }
 
-
-
-
         function getMatchData(arrayOfMatches){
-            //var id = arrayOfMatches[0];
-            $scope.exportData = [];
             angular.forEach(arrayOfMatches, function(match){
 
                 services.getMatchDataFor(match.gameId).then(function successCall(response){
                     $scope.matchRawData[match.gameId] = response.data
-                    var superstats = response.data.participants[0].stats;
-                    $scope.exportData.push(superstats)
                 },function errorCallback(response) {
                     $scope.matchRawData[match.gameId] = 'err';
                 });
             })
-        }
-
-        function saveAsCsv(json){
-
         }
 
         //Utility function to create an array of one value from an array of objects.
